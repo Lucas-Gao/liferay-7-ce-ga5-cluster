@@ -94,4 +94,4 @@ This Docker Compose contains this services:
 
  ② *Adopted nginx polling load balancing strategy, so you need to configure tomcat mechanism of sharing session, if the configuration session keep mechanism, can not use redis service, and the ` context.xml` make corresponding changes.* 
 
- ③ *when `setup.wizard.enabled=false` in `portal-ext.properties`，Liferay Portal will check if there is initialized data in the database at startup, and if there is no initialized data, it will initiate it first. If multiple nodes simultaneously initialize data, there will be an error, so the second node can only start after the initialization is completed when database is fire-new.*
+ ③ *When `setup.wizard.enabled=false` in `portal-ext.properties`，Liferay Portal will check if there is initialized data in the database at startup, and if there is no initialized data, it will initiate it first. If multiple nodes simultaneously initialize data, there will be an error, so the second node can only start after the initialization is completed when database is fire-new.*
