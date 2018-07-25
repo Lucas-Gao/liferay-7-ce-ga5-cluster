@@ -44,6 +44,7 @@ services:
       - redis
       - elasticsearch
     ports:
+      - '9001:9001'
       - '6080:8080'
       - '21311:11311'
   liferay-portal-node-2:
@@ -58,6 +59,7 @@ services:
       - elasticsearch
       - liferay-portal-node-1
     ports:
+      - '9002:9000'
       - '7080:8080'
       - '31311:11311'
   nginx:
