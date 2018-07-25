@@ -1,0 +1,10 @@
+FROM mdelapenya/liferay-portal:7-ce-ga5-tomcat-hsql
+
+
+COPY ./liferay_conf/portal-ext.properties $LIFERAY_CONFIG_DIR/
+COPY ./liferay_conf/osgi/configs/*.config $LIFERAY_CONFIG_DIR/osgi/
+COPY ./liferay_conf/osgi/configs/*.cfg $LIFERAY_CONFIG_DIR/osgi/
+COPY ./liferay_conf/osgi/modules/*.jar $LIFERAY_HOME/osgi/modules/
+COPY ./liferay_conf/tomcat/bin/setenv.sh $LIFERAY_HOME/tomcat-8.0.32/bin/
+COPY ./liferay_conf/tomcat/lib/ext/*.jar $LIFERAY_HOME/tomcat-8.0.32/lib/ext/
+COPY ./liferay_conf/tomcat/conf/context.xml $LIFERAY_HOME/tomcat-8.0.32/conf/

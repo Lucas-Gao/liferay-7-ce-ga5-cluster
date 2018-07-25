@@ -1,0 +1,71 @@
+version: '3.3'
+services:
+  mysql:
+    image: mysql:5.7
+    environment:
+      - MYSQL_ROOT_PASSWORD=my-secret-pw
+      - MYSQL_DATABASE=lportal
+      - MYSQL_USER=liferay
+      - MYSQL_PASSWORD=my-secret-pw
+    command: --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
+    ports:
+      - '3306:3306'
+  redis:
+    image: redis:4
+    ports:
+      - '6379:6379'
+  elasticsearch:
+    image: elasticsearch:2.4.6-alpine
+    environment:
+      - cluster.name=elasticsearch
+      - bootstrap.memory_lock=true
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    deploy:
+      resources:
+        limits:
+          memory: 1g
+    volumes:
+      - /liferay_cluster/elasticsearch/data:/usr/share/elasticsearch/data
+    ports:
+      - 9200:9200
+      - 9300:9300
+  liferay-portal-node-1:
+    build:
+      context: .
+      dockerfile: Dockerfile-liferay
+    volumes:
+      - /liferay_cluster/shared-directory/document_library/:/shared-directory/document_library
+    links:
+      - mysql
+      - redis
+      - elasticsearch
+    ports:
+      - '6080:8080'
+      - '21311:11311'
+  liferay-portal-node-2:
+    build:
+      context: .
+      dockerfile: Dockerfile-liferay
+    volumes:
+      - /liferay_cluster/shared-directory/document_library/:/shared-directory/document_library
+    links:
+      - mysql
+      - redis
+      - elasticsearch
+      - liferay-portal-node-1
+    ports:
+      - '7080:8080'
+      - '31311:11311'
+  nginx:
+    build:
+      context: .
+      dockerfile: Dockerfile-nginx
+    links:
+      - liferay-portal-node-1
+      - liferay-portal-node-2
+    ports:
+      - '80:80'
