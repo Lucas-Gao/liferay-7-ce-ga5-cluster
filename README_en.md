@@ -7,10 +7,11 @@ This repository is a Docker Compose project that allows you to run a Liferay por
 
 According to [Liferay Documentation](https://dev.liferay.com/de/discover/deployment/-/knowledge_base/7-0/liferay-clustering) , Liferay should be configured in the following way for a clustered environment：
 
-> 1. All nodes should be pointing to the same Liferay Portal database or database cluster.
-> 2. Documents and Media repositories must have the same configuration and be accessible to all nodes of the cluster.<sup>①</sup>
-> 3. Search should be on a separate search server that is optionally clustered.
-> 4. Cluster Link must be enabled so the cache replicates across all nodes of the cluster.
+> 1. (Liferay Portal CE only) Build and deploy the cluster modules to all cluster nodes.
+> 2. All nodes should point to the same Liferay Portal database or database cluster.
+> 3. Documents and Media repositories must have the same configuration and be accessible to all nodes of the cluster.<sup>①</sup>
+> 4. Search should be on a separate search server that is optionally clustered.
+> 5. Cluster Link must be enabled so the cache replicates across all nodes of the cluster.
 
 This Docker Compose contains this services:
 
